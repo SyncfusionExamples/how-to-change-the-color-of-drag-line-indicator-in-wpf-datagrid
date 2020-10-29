@@ -1,0 +1,125 @@
+﻿<Window x:Class="SfDataGridDemo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
+        xmlns:local="clr-namespace:SfDataGridDemo"
+        Title="SfDataGrid Demo"
+        Width="790"
+        Height="550"
+        Icon="App.ico"
+        WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:ViewModel/> 
+    </Window.DataContext>
+    <Window.Resources>
+        
+        <!--  Header Row Style  -->
+        <Style    TargetType="syncfusion:HeaderRowControl">            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="syncfusion:HeaderRowControl">
+                        <Grid>
+                            <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="True">
+                                <ContentPresenter />
+                            </Border>
+                            <Border x:Name="PART_DragLineIndicator" 
+                                BorderBrush="Red" 
+                                Visibility="Collapsed" 
+                                BorderThickness="0,0,0,2" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+
+        <!--  Row Style  -->
+        <Style TargetType="syncfusion:VirtualizingCellsControl">           
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="syncfusion:VirtualizingCellsControl">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="BorderStates">
+                                    <VisualState x:Name="NormalRow" />
+                                    <VisualState x:Name="FrozenRow">
+                                        <Storyboard BeginTime="0">
+                                            <ThicknessAnimationUsingKeyFrames BeginTime="0"
+                                                                          Duration="1"
+                                                                          Storyboard.TargetName="PART_RowBorder"
+                                                                          Storyboard.TargetProperty="BorderThickness">
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="0, 0, 0, 1" />
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="FooterRow">
+                                        <Storyboard BeginTime="0">
+                                            <ThicknessAnimationUsingKeyFrames BeginTime="0"
+                                                                          Duration="1"
+                                                                          Storyboard.TargetName="PART_RowBorder"
+                                                                          Storyboard.TargetProperty="BorderThickness">
+
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="0, 1, 0, 0" />
+                                            </ThicknessAnimationUsingKeyFrames>
+                                            <ThicknessAnimationUsingKeyFrames BeginTime="0"
+                                                                          Duration="1"
+                                                                          Storyboard.TargetName="PART_RowBorder"
+                                                                          Storyboard.TargetProperty="Margin">
+                                                <EasingThicknessKeyFrame KeyTime="0" Value="0, -1, 0, 0" />
+                                            </ThicknessAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Border x:Name="PART_RowBorder"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}" />
+                            <Rectangle Clip="{TemplateBinding RowBackgroundClip}" Fill="{TemplateBinding Background}" />
+                            <Border Background="{TemplateBinding RowSelectionBrush}"
+                                Clip="{TemplateBinding SelectionBorderClipRect}"
+                                Visibility="{TemplateBinding SelectionBorderVisiblity}" />
+                            <Border Background="{TemplateBinding RowHoverBackgroundBrush}"
+                                BorderBrush="{TemplateBinding RowHoverBackgroundBrush}"
+                                BorderThickness="{TemplateBinding RowHighlightBorderThickness}"
+                                Clip="{TemplateBinding HighlightBorderClipRect}"
+                                SnapsToDevicePixels="True"
+                                Visibility="{TemplateBinding HighlightSelectionBorderVisiblity}" />
+                            <Rectangle x:Name="PART_CurrentFocusRow"
+                                   Margin="{TemplateBinding CurrentFocusBorderMargin}"
+                                   Stroke="#666666"
+                                   StrokeDashArray="2,2"
+                                   StrokeThickness="1"
+                                   Visibility="{TemplateBinding CurrentFocusRowVisibility}" />
+                            <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <ContentPresenter />
+                            </Border>
+                            <Border x:Name="PART_DragLineIndicator" 
+                                BorderBrush="Red" 
+                                Visibility="Collapsed" 
+                                BorderThickness="0,0,0,2" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>               
+    </Window.Resources>
+    <Grid>
+        <syncfusion:SfDataGrid x:Name="sfDataGrid"    
+                               AllowDraggingRows="True"                               
+                               RowDropIndicatorMode="Line"                               
+                               AllowDrop="True"
+                               ItemsSource="{Binding Path=Orders}"
+                               AutoGenerateColumns="False">            
+           <syncfusion:SfDataGrid.Columns>
+                <syncfusion:GridTextColumn MappingName="OrderID" HeaderText="Order ID"/>
+                <syncfusion:GridTextColumn MappingName="CustomerID" HeaderText="Customer ID" />
+                <syncfusion:GridTextColumn MappingName="CustomerName" HeaderText="Customer Name" />
+                <syncfusion:GridTextColumn MappingName="Country" HeaderText="Country" />
+                <syncfusion:GridTextColumn MappingName="UnitPrice" HeaderText="Unit Price" />                            
+            </syncfusion:SfDataGrid.Columns>
+			</syncfusion:SfDataGrid>     
+    </Grid>
+</Window>
