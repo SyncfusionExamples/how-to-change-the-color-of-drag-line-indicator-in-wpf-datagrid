@@ -111,6 +111,7 @@ The following screenshot shows the drag line indicator color changed,
 
 ![SDrag line indicator color changed](RowDragDropIndicatorColorChanged.png)
 
+KB article - [How to change the color of drag line indicator in WPF DataGrid (SfDataGrid)?](https://www.syncfusion.com/kb/12001/how-to-change-the-color-of-drag-line-indicator-in-wpf-datagrid-sfdatagrid)
 
 ## Requirements to run the demo
 Visual Studio 2015 and above versions
